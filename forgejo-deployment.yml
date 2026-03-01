@@ -18,6 +18,14 @@ spec:
         - name: forgejo
           # Using the specific version from your compose file for stability
           image: codeberg.org/forgejo/forgejo:14
+          resources:
+            requests:
+              memory: "256Mi" # Start by asking for 256 Megabytes
+              cpu: "100m" # Ask for 100 millicores (1/10th of a CPU core)
+            limits:
+              memory: "500Mi" # Hard stop at 1 Gigabyte to protect the rest of the 8GB system
+              cpu: "500m" # Max out at half a CPU core
+            # ----------------------------------------
           ports:
             - containerPort: 3000
               name: http
