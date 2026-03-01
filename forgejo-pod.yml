@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: forgejo
+  labels:
+    deployment: forgejo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: forgejo
+  template:
+    metadata:
+      labels:
+        app: forgejo
+    spec:
+      containers:
+        - name: forgejo
+          # Using the specific version from your compose file for stability
+          image: codeberg.org/forgejo/forgejo:14
+          ports:
+            - containerPort: 3000
+              name: http
+            - containerPort: 22
+              name: ssh
+          env:
+            - name: USER_UID
+              value: "1000"
+            - name: USER_GID
+              value: "1000"
+          volumeMounts:
+            - name: forgejo-data-volume
+              mountPath: /data
+            - name: timezone-config
+              mountPath: /etc/localtime
+              readOnly: true
+      volumes:
+        - name: forgejo-pvc
+          persistentVolumeClaim:
+            claimName: forgejo-pvc
+        - name: timezone-config
+          # Maps the Pi's timezone to the pod
+          hostPath:
+            path: /etc/localtime
+            readOnly: true
