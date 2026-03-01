@@ -42,4 +42,3 @@ spec:
           # Maps the Pi's timezone to the pod
           hostPath:
             path: /etc/localtime
-            readOnly: true
