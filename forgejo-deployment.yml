@@ -35,7 +35,7 @@ spec:
               mountPath: /etc/localtime
               readOnly: true
       volumes:
-        - name: forgejo-pvc
+        - name: forgejo-data-volume
           persistentVolumeClaim:
             claimName: forgejo-pvc
         - name: timezone-config
