@@ -1,0 +1,23 @@
+services:
+  managed-node-1:
+    build:
+      context: .
+      dockerfile: sshd.Dockerfile
+    container_name: managed-node-1
+    ports:
+      - "2221:22"
+    networks:
+      - ansible
+  managed-node-2:
+    build:
+      context: .
+      dockerfile: sshd.Dockerfile
+    container_name: managed-node-2
+    ports:
+      - "2222:22"
+    networks:
+      - ansible
+
+networks:
+  ansible:
+    driver: bridge
